@@ -1,36 +1,39 @@
 <template>
   <div>
-  <router-view/>
+    <router-view/>
   </div>
 </template>
 //router-view就是用来表示一个路由对象所处的位置
 //router-link是一个导航组件能跳转到相应的router
 <style lang="scss">
-  @import "~@/assets/1.css";
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
     color: #2c3e50;
+  }
 
-    &.router-link-exact-active {
-      color: #42b983;
+  #nav {
+    padding: 30px;
+
+    a {
+      font-weight: bold;
+      color: #2c3e50;
+
+      &.router-link-exact-active {
+        color: #42b983;
+      }
     }
   }
-}
 </style>
 <script>
 
-  export default {
-
-  }
+  export default {}
 </script>
