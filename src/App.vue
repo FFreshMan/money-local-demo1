@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div>导航</div>
-    <router-link to="/Money">记账</router-link>
-    <router-link to="/labels">标签</router-link>
-    <router-link to="/statistics">统计</router-link>
-    <router-view/>
+  <router-view/>
   </div>
 </template>
 //router-view就是用来表示一个路由对象所处的位置
