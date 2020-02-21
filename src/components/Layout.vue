@@ -6,7 +6,7 @@
       <Nav/>
     </div>
 </template>
-//Layout组件与slot插槽
+//Layout组件与slot插槽,见Labels组件中对应的slot部分
 <script lang="ts">
   import Nav from '@/components/Nav.vue';
   export default {
