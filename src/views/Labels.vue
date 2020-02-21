@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout>
-      labels
+     <p>Labels</p>
     </Layout>
   </div>
 </template>
@@ -13,5 +13,6 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/style/helper.scss";
 
 </style>
