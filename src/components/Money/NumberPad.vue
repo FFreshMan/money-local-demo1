@@ -1,43 +1,78 @@
 <template>
   <div>
     <div class="numberPad">
-      <div class="outPut">100</div>
+      <div class="output">{{output}}</div>
       <div class="buttons">
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>删除</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>清空</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button class="ok">OK</button>
-        <button class="zero">0</button>
-        <button>.</button>
+        <button @click="setContent">1</button>
+        <button @click="setContent">2</button>
+        <button @click="setContent">3</button>
+        <button @click="remove">删除</button>
+        <button @click="setContent">4</button>
+        <button @click="setContent">5</button>
+        <button @click="setContent">6</button>
+        <button @click="clear">清空</button>
+        <button @click="setContent">7</button>
+        <button @click="setContent">8</button>
+        <button @click="setContent">9</button>
+        <button class="ok" @click="ok">OK</button>
+        <button class="zero" @click="setContent">0</button>
+        <button @click="setContent">.</button>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'NumberPad'
-  };
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+
+  @Component
+  export default class Type extends Vue {
+    output = '0';
+    remove(){
+      if(this.output.length>1){
+        this.output=this.output.substring(0,this.output.length-1);
+      }else{
+        this.output='0'
+      }
+    }
+    clear(){
+      console.log(1);
+    }
+    ok(){
+      console.log(1);
+    }
+    setContent(event: MouseEvent) {
+      const button = (event.target as HTMLButtonElement);
+      const input = button.textContent as string;
+      // const input=button.textContent!
+      if (this.output.length > 16) {return;}
+      if (this.output === '0') {
+        if ('0123456789'.indexOf(input) >= 0) {
+          this.output = input;
+        } else {
+          this.output += input;
+        }
+        return;
+      }
+      if (this.output.indexOf('.') >= 0 && input === '.') {return; }
+      this.output += input;
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
+
   .numberPad {
-    .outPut {
+    .output {
       @extend %clearFix ;
       font-size: 36px;
       font-family: Consolas, monospace;
       /*等宽字体*/
       padding: 9px 16px;
       text-align: right;
+      min-height: 72px;
       @extend %innerShadow;
     }
 

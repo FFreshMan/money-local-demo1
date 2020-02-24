@@ -11,13 +11,11 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop} from 'vue-property-decorator';
+  import {Component} from 'vue-property-decorator';
 
   @Component
   export default class Type extends Vue {
-    @Prop(Number) readonly propA: number | undefined;
-    @Prop({default: 'default value'}) readonly propB!: string;
-    @Prop([String, Boolean]) readonly propC: string | boolean | undefined;
+    // @Prop(Number) readonly propA: number | undefined;
     type = '-';
 
     selectType(type: string) {
