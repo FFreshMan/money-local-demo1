@@ -4,7 +4,7 @@
       <number-pad/>
       <Types :propA="222"/>
       <Notes/>
-      <tags/>
+      <Tags :data-source="tags"/>
     </Layout>
   </div>
 </template>
@@ -18,6 +18,11 @@
     name: 'Money',
     components: {
       Tags, Notes, Types, NumberPad
+    },
+    data() {
+      return {
+        tags: ['衣', '食', '住', '行']
+      };
     }
   };
 </script>
