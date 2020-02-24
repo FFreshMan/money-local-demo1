@@ -1,9 +1,10 @@
 <template>
   <div>
     <div>
+      {{value}}
       <label class="notes">
         <span class="name">备注</span>
-        <input type="text" :value="value" @input="oninput" placeholder="请在这里添加备注 ">
+        <input type="text" v-model="value" placeholder="请在这里添加备注 ">
       </label>
     </div>
   </div>
