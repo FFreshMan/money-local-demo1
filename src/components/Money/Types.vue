@@ -9,28 +9,31 @@
   </div>
 </template>
 
-<script lang="Js">
-  export default {
-    name: 'Types',
-    data(){
-      return {
-        type:'-'
-      }
-    },
-    methods:{
-      selectType(type){
-        if(type!=='-'&&type!=='+'){
-          throw new Error('no type found')
-        }else{
-          this.type=type;
-        }
+<script lang="ts">
+  import Vue from 'vue';
+  import {Component, Prop} from 'vue-property-decorator';
+
+  @Component
+  export default class Type extends Vue {
+    @Prop(Number) readonly propA: number | undefined;
+    @Prop({default: 'default value'}) readonly propB!: string;
+    @Prop([String, Boolean]) readonly propC: string | boolean | undefined;
+    type = '-';
+
+    selectType(type: string) {
+      if (type !== '-' && type !== '+') {
+        throw new Error('no type found');
+      } else {
+        this.type = type;
       }
     }
-  };
+  }
+
 </script>
 
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
+
   .types {
     background: #c4c4c4;
     display: flex;
