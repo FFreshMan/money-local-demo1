@@ -31,6 +31,7 @@
       } else {
         this.selectedTags.push(tag);
       }
+      this.$emit('update:value',this.selectedTags)
     }
 
     newTag() {
@@ -39,6 +40,7 @@
         window.alert('标签名不能为空')
       }else if(this.dataSource){
         this.$emit('update:dataSource',[...this.dataSource,name])
+        //这里不能直接修改标签数组，而是触发一个事件然后让外部监听这个事件
       }
     }
   }

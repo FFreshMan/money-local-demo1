@@ -24,23 +24,28 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component,Prop} from 'vue-property-decorator';
 
   @Component
   export default class Type extends Vue {
-    output = '0';
+    @Prop()readonly  value!: number;
+    output=this.value.toString();
     remove(){
       if(this.output.length>1){
         this.output=this.output.substring(0,this.output.length-1);
+        console.log(this.value);
       }else{
         this.output='0'
       }
     }
     clear(){
-      console.log(1);
+      this.output='0'
     }
     ok(){
-      console.log(1);
+      this.$emit('update:value',this.output)
+      //这里value有两个作用一个是传入一个只读数据
+      //一个是监听value的变化，并将this.output和外部的amount绑定到一起
+      //所以外部的onAmountChanged函数就可以省略了
     }
     setContent(event: MouseEvent) {
       const button = (event.target as HTMLButtonElement);
