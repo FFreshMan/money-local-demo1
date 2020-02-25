@@ -2,7 +2,7 @@
   <div>
     <Layout class-prefix="layout">
       {{record}}
-      <number-pad :value.sync="record.amount"/>
+      <number-pad :value.sync="record.amount" @submit="saveRecord"/>
       <Types :value.sync="record.type"/>
       <Notes :value="onUpdateNotes"/>
       <Tags :data-source.sync="tags" :value.sync="record.tags"/>
@@ -15,7 +15,7 @@
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import Notes from '@/components/Money/Notes.vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Watch} from 'vue-property-decorator';
 
   type Record = {
     tags?: string[];
@@ -31,8 +31,9 @@
   )
   export default class Money extends Vue {
     tags = ['衣', '食', '住', '行'];
-    record: Record = {tags: [],notes: '', type: '', amount: 0};
-
+    record: Record = {tags: [], notes: '', type: '', amount: 0};
+    recordList: Record[] = [];
+    //由于这里是吧record给push进去，所以他是以Record类型为元素的数组
     // onUpdateType(value: string) {
     //   this.record.type = value;
     // }由于上面<Types :value="record.type" @update:value="onUpdateType"/>被改写成sync
@@ -45,6 +46,17 @@
     onUpdateTags(value: string[]) {
       this.record.tags = value;
       //这里的value是传入的tags数组，上面的：value是触发的事件监听
+    }
+
+    saveRecord() {
+      const r1 = JSON.parse(JSON.stringify(this.record));
+      //这里要讲原对象深拷贝一下然后还原成相同的却不同地址的对象，防止引用同一个地址
+      this.recordList.push(r1);
+    }
+
+    @Watch('recordList')
+    onRecordListChange() {
+      window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
     }
   }
 
