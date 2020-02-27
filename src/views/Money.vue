@@ -16,6 +16,7 @@
   import Tags from '@/components/Money/Tags.vue';
   import Notes from '@/components/Money/Notes.vue';
   import {Component, Watch} from 'vue-property-decorator';
+  import {model} from '@/model.ts';
 
   // const version: string = window.localStorage.getItem('version') || '0';
   // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
@@ -28,14 +29,7 @@
   //   window.localStorage.setItem('recordList', JSON.stringify(recordList));
   // }
   window.localStorage.setItem('version', '1.0.1');
-  type Record = {
-    tags?: string[];
-    notes: string;
-    type: string;
-    amount: number;
-    createdDate?: Date;//除了数据类型还可以写类/构造函数
-  }
-  //?表示可有可无
+
   @Component({
       components:
         {Tags, Notes, Types, NumberPad}
@@ -44,8 +38,8 @@
   export default class Money extends Vue {
 
     tags = ['衣', '食', '住', '行'];
-    record: Record = {tags: [], notes: '', type: '', amount: 0};
-    recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
+    record: RecordItem = {tags: [], notes: '', type: '', amount: 0};
+    recordList = model.fetch();
     //由于这里是吧record给push进去，所以他是以Record类型为元素的数组
     // onUpdateType(value: string) {
     //   this.record.type = value;
@@ -62,7 +56,7 @@
     }
 
     saveRecord() {
-      const record2: Record = JSON.parse(JSON.stringify(this.record));
+      const record2= model.clone(this.record);
       //这里要讲原对象深拷贝一下然后还原成相同的却不同地址的对象，防止引用同一个地址
       record2.createdDate = new Date();
       this.recordList.push(record2);
@@ -70,7 +64,7 @@
 
     @Watch('recordList')
     onRecordListChange() {
-      window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
+      model.save(this.recordList);
     }
   }
 
