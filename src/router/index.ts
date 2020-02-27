@@ -26,7 +26,7 @@ const routes = [
     component: Labels
   },
   {
-    path:"/Labels/edit",
+    path:"/Labels/edit/:id",
     name:"edit",
     component: EditLabel
   },
