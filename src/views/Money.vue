@@ -4,7 +4,7 @@
       {{record}}
       <number-pad :value.sync="record.amount" @submit="saveRecord"/>
       <Types :value.sync="record.type"/>
-      <Notes :value="onUpdateNotes"/>
+      <Notes @update:value="onUpdateNotes"/>
       <Tags :data-source.sync="tags" :value.sync="record.tags"/>
     </Layout>
   </div>
@@ -42,6 +42,7 @@
   )
   export default class Money extends Vue {
     record: RecordItem = {tags: [], notes: '', type: '', amount: 0};
+    //record所有属性都被监听了，直接就改这些属性
     recordList: RecordItem[] = recordList;
     //recordList是用来记录所有信息的
     tags = tagList;
@@ -54,6 +55,7 @@
     //所以直接就改了record中的type这样就可以省略这个函数
 
     onUpdateNotes(value: string) {
+
       this.record.notes = value;
     }
 
