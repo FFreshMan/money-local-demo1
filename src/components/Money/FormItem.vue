@@ -6,7 +6,7 @@
         <input type="text"
                :value="value"
                @input="onValueChanged($event.target.value)"
-               :placeholder=this.placeHolder>
+               :placeholder=placeHolder>
       </label>
     </div>
   </div>
@@ -14,8 +14,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop, Watch} from 'vue-property-decorator';
-
+  import {Component, Prop} from 'vue-property-decorator';
   @Component
   export default class FormItem extends Vue {
     @Prop({required: true}) fileName!: string;
@@ -24,7 +23,7 @@
 
 
     //v-model就是为这个value添加动态监听 相当于第6行改写
-    @Watch('value')
+    // @Watch('value')可以删除
     onValueChanged(val: string) {
       this.$emit('update:value', val);
     }
