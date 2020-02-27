@@ -6,6 +6,7 @@ type TagListModel = {
   create: (name: Tag) => boolean;
   save: () => void;
   update: (id: string, name: string) => 'success' | 'id not found' | 'duplicated';
+  remove: (id: string) => 'success' | 'id not found';
 }
 const tagListModel: TagListModel = {
   data: [],
@@ -43,6 +44,24 @@ const tagListModel: TagListModel = {
     } else {
       return 'id not found';
     }
+  },
+  remove(id: string) {
+    let index = -1;
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    if (index === -1) {
+      return 'id not found';
+    } else {
+      this.data.splice(index, 1);
+      this.save();
+      console.log(this.data);
+      return 'success';
+    }
+
   }
 };
 export {tagListModel};

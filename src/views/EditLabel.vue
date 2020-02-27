@@ -14,7 +14,7 @@
         />
       </div>
       <div class="buttonWrapper">
-        <Button>删除标签</Button>
+        <Button @click="remove">删除标签</Button>
       </div>
 
     </Layout>
@@ -47,10 +47,18 @@
     }
 
     updateTag(name: string) {
-      if(this.tag){
-        tagListModel.update(this.tag.id,name);
-      }else{
-      return
+      if (this.tag) {
+        tagListModel.update(this.tag.id, name);
+      } else {
+        return;
+      }
+    }
+
+    remove() {
+      if (this.tag) {
+        tagListModel.remove(this.tag.id);
+      } else {
+        return;
       }
     }
   }
