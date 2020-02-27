@@ -4,7 +4,7 @@
       {{record}}
       <number-pad :value.sync="record.amount" @submit="saveRecord"/>
       <Types :value.sync="record.type"/>
-      <Notes @update:value="onUpdateNotes"/>
+      <Notes file-name="备注" place-holder="请在这里输入备注" @update:value="onUpdateNotes"/>
       <Tags :data-source.sync="tags" :value.sync="record.tags"/>
     </Layout>
   </div>
@@ -41,7 +41,7 @@
     }
   )
   export default class Money extends Vue {
-    record: RecordItem = {tags: [], notes: '', type: '', amount: 0};
+    record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
     //record所有属性都被监听了，直接就改这些属性
     recordList: RecordItem[] = recordList;
     //recordList是用来记录所有信息的
