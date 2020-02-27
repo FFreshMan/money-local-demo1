@@ -1,11 +1,15 @@
 <template>
   <div>
     <Layout>
-      <ol class="tags">
-        <li v-for="tag in tags" :key="tag.name"><span>{{tag.name}}</span>
+      <div class="tags">
+        <router-link
+          class="tag"
+          v-for="tag in tags" :key="tag.name"
+          :to="`/labels/edit/${tag.id}`">
+          <span>{{tag.name}}</span>
           <Icons name="arrow-right"/>
-        </li>
-      </ol>
+        </router-link>
+      </div>
       <div class="newTag-wrapper">
         <button class="newTag" @click="createTag">新建标签</button>
       </div>
@@ -22,7 +26,7 @@
   @Component
   export default class Labels extends Vue {
     tags = tagList;
-    tag: Tag={id:' ',name:' '};
+    tag: Tag = {id: ' ', name: ' '};
 
     createTag() {
       const name = window.prompt('请输入标签名');
@@ -46,7 +50,7 @@
     padding-left: 16px;
     background: #fff;
 
-    > li {
+    > .tag {
       min-height: 44px;
       display: flex;
       align-items: center;
