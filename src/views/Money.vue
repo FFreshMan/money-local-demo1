@@ -43,6 +43,7 @@
   export default class Money extends Vue {
     record: RecordItem = {tags: [], notes: '', type: '', amount: 0};
     recordList: RecordItem[] = recordList;
+    //recordList是用来记录所有信息的
     tags = tagList;
 
 
@@ -56,7 +57,7 @@
       this.record.notes = value;
     }
 
-    onUpdateTags(value: string[]) {
+    onUpdateTags(value: Tag[]) {
       this.record.tags = value;
       //这里的value是传入的tags数组，上面的：value是触发的事件监听
     }

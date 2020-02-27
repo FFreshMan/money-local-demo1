@@ -5,9 +5,9 @@
         <button @click="newTag">新增标签</button>
       </div>
       <ul class="current">
-        <li v-for="tag in dataSource" :key="tag"
+        <li v-for="tag in dataSource" :key="tag.name"
             @click="toggle(tag)"
-            :class="{selected:selectedTags.indexOf(tag)>=0}">{{tag}}
+            :class="{selected:selectedTags.indexOf(tag)>=0}">{{tag.name}}
         </li>
       </ul>
       <!--surround emmet-->
@@ -21,10 +21,10 @@
 
   @Component
   export default class Tags extends Vue {
-    @Prop(Array)readonly   dataSource: string[] | undefined;
-    selectedTags: string[] = [];
+    @Prop(Array)readonly   dataSource: Tag[] | undefined;
+    selectedTags: Tag[] = [];
 
-    toggle(tag: string) {
+    toggle(tag: Tag) {
       const index = this.selectedTags.indexOf(tag);
       if (index >= 0) {
         this.selectedTags.splice(index, 1);

@@ -2,7 +2,7 @@
   <div>
     <Layout>
       <ol class="tags">
-        <li v-for="tag in tags" :key="tag"><span>{{tag}}</span>
+        <li v-for="tag in tags" :key="tag.name"><span>{{tag.name}}</span>
           <Icons name="arrow-right"/>
         </li>
       </ol>
@@ -22,11 +22,13 @@
   @Component
   export default class Labels extends Vue {
     tags = tagList;
+    tag: Tag={id:' ',name:' '};
 
     createTag() {
       const name = window.prompt('请输入标签名');
+      const tag = {id: name, name: name};
       if (name) {
-        try { tagListModel.create(name);} catch (e) {
+        try { tagListModel.create(tag);} catch (e) {
           console.log(e);
           alert('标签名已存在');
         }
@@ -68,7 +70,6 @@
     padding: 5px 16px;
 
     &-wrapper {
-      background: red;
       text-align: center;
       margin-top: 30px;
     }

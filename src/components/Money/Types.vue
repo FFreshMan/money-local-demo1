@@ -11,16 +11,18 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component,Prop} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
 
   @Component
   export default class Type extends Vue {
     // @Prop(Number) readonly propA: number | undefined;
-    @Prop({default: '-'})readonly  value!: string
+    @Prop({default: '-'}) readonly value!: string;
+
     selectType(type: string) {
       if (type !== '-' && type !== '+') {
         throw new Error('no type found');
       }
+      this.$emit('update:value', type);
     }
   }
 
