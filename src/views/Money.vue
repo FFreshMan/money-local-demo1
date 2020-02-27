@@ -16,7 +16,11 @@
   import Tags from '@/components/Money/Tags.vue';
   import Notes from '@/components/Money/Notes.vue';
   import {Component, Watch} from 'vue-property-decorator';
-  import {model} from '@/model.ts';
+  import {recordListModel} from '@/models/recordListModel';
+  import {tagListModel} from '@/models/tagListModel';
+
+  const recordList = recordListModel.fetch();
+  const tagList = tagListModel.fetch();
 
   // const version: string = window.localStorage.getItem('version') || '0';
   // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
@@ -26,6 +30,7 @@
   //     record.createdDate = new Date(2020, 1, 0);
   //   });
   //   //保存数据
+
   //   window.localStorage.setItem('recordList', JSON.stringify(recordList));
   // }
   window.localStorage.setItem('version', '1.0.1');
@@ -36,11 +41,12 @@
     }
   )
   export default class Money extends Vue {
-
-    tags = ['衣', '食', '住', '行'];
     record: RecordItem = {tags: [], notes: '', type: '', amount: 0};
-    recordList = model.fetch();
-    //由于这里是吧record给push进去，所以他是以Record类型为元素的数组
+    recordList: RecordItem[] = recordList;
+    tags = tagList;
+
+
+
     // onUpdateType(value: string) {
     //   this.record.type = value;
     // }由于上面<Types :value="record.type" @update:value="onUpdateType"/>被改写成sync
@@ -56,7 +62,7 @@
     }
 
     saveRecord() {
-      const record2= model.clone(this.record);
+      const record2 = recordListModel.clone(this.record);
       //这里要讲原对象深拷贝一下然后还原成相同的却不同地址的对象，防止引用同一个地址
       record2.createdDate = new Date();
       this.recordList.push(record2);
@@ -64,7 +70,7 @@
 
     @Watch('recordList')
     onRecordListChange() {
-      model.save(this.recordList);
+      recordListModel.save(this.recordList);
     }
   }
 

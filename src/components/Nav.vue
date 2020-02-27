@@ -39,7 +39,7 @@
       color: #333333;
     }
     > .item.selected{
-      color: $color-highlight
+      color: $color-highlight;
     }
 
   }

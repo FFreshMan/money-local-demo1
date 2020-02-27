@@ -9,7 +9,7 @@
   @import "~@/assets/style/reset.scss";
   @import "~@/assets/style/helper.scss";
   body{
-    
+    background: #f5f5f5;
   }
   #app {
     font-size: 16px;
@@ -20,10 +20,7 @@
     font-family: $font-hei;
   }
 
-
-
 </style>
 <script>
-
   export default {}
 </script>
