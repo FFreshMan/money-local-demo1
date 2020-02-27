@@ -14,7 +14,7 @@
   import {Component, Prop, Watch} from 'vue-property-decorator';
 
   @Component
-  export default class Notes extends Vue {
+  export default class FormItem extends Vue {
     @Prop({required: true}) fileName!: string;
     @Prop() placeHolder?: string;
     value = '';
@@ -43,7 +43,6 @@
     display: flex;
     align-items: center;
 
-    background: #f5f5f5;
 
     > .name {
       padding-right: 16px;

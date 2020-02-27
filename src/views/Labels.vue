@@ -9,9 +9,9 @@
           <span>{{tag.name}}</span>
           <Icons name="arrow-right"/>
         </router-link>
-      </div>
-      <div class="newTag-wrapper">
-        <button class="newTag" @click="createTag">新建标签</button>
+        <div class="newTag-wrapper">
+          <Button class="newTag" @click="createTag">新建标签</Button>
+        </div>
       </div>
     </Layout>
   </div>
@@ -21,9 +21,12 @@
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import {tagListModel} from '@/models/tagListModel';
+  import Button from '@/components/Button.vue';
 
   const tagList = tagListModel.fetch();
-  @Component
+  @Component({
+    components: {Button}
+  })
   export default class Labels extends Vue {
     tags = tagList;
     tag: Tag = {id: ' ', name: ' '};
@@ -78,4 +81,6 @@
       margin-top: 30px;
     }
   }
+
+
 </style>
