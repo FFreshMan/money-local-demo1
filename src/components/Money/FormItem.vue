@@ -3,7 +3,10 @@
     <div>
       <label class="notes">
         <span class="name">{{this.fileName}}</span>
-        <input type="text" v-model="value" :placeholder=this.placeHolder>
+        <input type="text"
+               :value="value"
+               @input="onValueChanged($event.target.value)"
+               :placeholder=this.placeHolder>
       </label>
     </div>
   </div>
@@ -16,12 +19,13 @@
   @Component
   export default class FormItem extends Vue {
     @Prop({required: true}) fileName!: string;
-    @Prop() placeHolder?: string;
-    value = '';
+    @Prop() placeHolder!: string;
+    @Prop({default: ''}) value!: string;
 
-    //v-model就是为这个value添加动态监听
+
+    //v-model就是为这个value添加动态监听 相当于第6行改写
     @Watch('value')
-    onValueChanged(val: string, oldVal: string) {
+    onValueChanged(val: string) {
       this.$emit('update:value', val);
     }
 
