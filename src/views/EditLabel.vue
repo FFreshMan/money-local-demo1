@@ -2,14 +2,14 @@
   <div>
     <Layout>
       <div class="navBar">
-        <Icons name="arrow-left" class="leftIcon"/>
+        <Icons name="arrow-left" class="leftIcon" @click="goBack"/>
         <span class="title">编辑标签</span>
         <span class="rightIcon"></span>
       </div>
       <div class="wrapper">
         <FormItem file-name="标签名"
                   place-holder="请输入标签名"
-                  :value="this.tag.name"
+                  :value="tag.name"
                   @update:value="updateTag"
         />
       </div>
@@ -24,7 +24,6 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import {tagListModel} from '@/models/tagListModel';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
 
@@ -36,8 +35,7 @@
 
     created() {
       const id = this.$route.params.id;
-      tagListModel.fetch;
-      const tags = tagListModel.data;
+      const tags = window.tagList;
       const tag = tags.filter(t => t.id === id)[0];
       if (tag) {
         this.tag = tag;
@@ -48,7 +46,7 @@
 
     updateTag(name: string) {
       if (this.tag) {
-        tagListModel.update(this.tag.id, name);
+        window.updateTag(this.tag.id, name);
       } else {
         return;
       }
@@ -56,10 +54,14 @@
 
     remove() {
       if (this.tag) {
-        tagListModel.remove(this.tag.id);
+        window.remove(this.tag.id);
+        this.$router.replace('/labels');
       } else {
         return;
       }
+    }
+    goBack(){
+      this.$router.replace('/labels');
     }
   }
 </script>

@@ -17,10 +17,9 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import {Component, Watch} from 'vue-property-decorator';
   import {recordListModel} from '@/models/recordListModel';
-  import {tagListModel} from '@/models/tagListModel';
+
 
   const recordList = recordListModel.fetch();
-  const tagList = tagListModel.fetch();
 
   // const version: string = window.localStorage.getItem('version') || '0';
   // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
@@ -45,7 +44,7 @@
     //record所有属性都被监听了，直接就改这些属性
     recordList: RecordItem[] = recordList;
     //recordList是用来记录所有信息的
-    tags = tagList;
+    tags = window.tagList;
 
 
     // onUpdateType(value: string) {

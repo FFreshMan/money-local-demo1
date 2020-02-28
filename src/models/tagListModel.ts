@@ -1,31 +1,35 @@
+import createId from '@/lib/idCreater';
+
 const localStorageKeyName = 'tagList';
 
-type TagListModel = {
-  data: Tag[];
-  fetch: () => Tag[];
-  create: (name: Tag) => boolean;
-  save: () => void;
-  update: (id: string, name: string) => 'success' | 'id not found' | 'duplicated';
-  remove: (id: string) => 'success' | 'id not found';
-}
+
 const tagListModel: TagListModel = {
+  init: [{'id': '衣', 'name': '衣'}, {'id': '食', 'name': '食'}, {'id': '住', 'name': '住'}, {'id': '行', 'name': '行'}],
   data: [],
   // data: ['衣', '食', '住', '行'],
-  // [{id:"衣",name:"衣"},{id:"食",name:"食"},{id:"住",name:"住"},{id:"行",name:"行"}]
+  // [{"id":"衣","name":"衣"},{"id":"食","name"":"食"},{"id":"住","name":"住"},{"id":"行","name":"行"}]
   fetch() {
-    this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]');
+    const init = JSON.stringify(this.init);
+    this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || init);
     return this.data;
   },
   save() {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
   },
-  create(name) {
-    if (this.data.indexOf(name) >= 0) {
-      throw new Error('duplicated');
+  create(name: string) {
+    const nameList = this.data.map(t => t.name);
+    if (name) {
+      if (nameList.indexOf(name) >= 0) {
+        return 'duplicated';
+      } else {
+        const id: string = createId().toString();
+        const tag = {id: id, name: name};
+        this.data.push(tag);
+        this.save();
+        return 'success';
+      }
     } else {
-      this.data.push(name);
-      this.save();
-      return true;
+      return 'name void';
     }
   },
   update(id, name) {
@@ -58,7 +62,6 @@ const tagListModel: TagListModel = {
     } else {
       this.data.splice(index, 1);
       this.save();
-      console.log(this.data);
       return 'success';
     }
 
