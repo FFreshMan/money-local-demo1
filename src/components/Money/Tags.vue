@@ -18,6 +18,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component, Prop} from 'vue-property-decorator';
+  import store from '@/store/index2';
 
   @Component
   export default class Tags extends Vue {
@@ -35,11 +36,12 @@
     }
 
     newTag() {
-      const name = window.prompt('请输入标签名');
+      const name = window.prompt('请输入标签名') as string;
+      store.createTag(name);
       if(name===''){
         window.alert('标签名不能为空')
       }else if(this.dataSource){
-        this.$emit('update:dataSource',[...this.dataSource,{id:name,name:name}])
+        this.$emit('update:dataSource',store.tagList())
         //这里不能直接修改标签数组，而是触发一个事件然后让外部监听这个事件
       }
     }

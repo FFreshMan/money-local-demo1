@@ -60,7 +60,6 @@
       this.record.tags = value;
       //这里的value是传入的tags数组，上面的：value是触发的事件监听
     }
-
     saveRecord() {
       store.createRecord(this.record);
     }
