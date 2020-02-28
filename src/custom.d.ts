@@ -12,13 +12,13 @@ type Tag = {
   id: string;
   name: string;
 }
-type TagListModel = {
-  init: Tag[];
-  data: Tag[];
-  fetch: () => Tag[];
-  create: (name: string) => 'success' | 'duplicated' | 'name void';
-  save: () => void;
-  update: (id: string, name: string) => 'success' | 'id not found' | 'duplicated';
-  removeTag: (id: string) => 'success' | 'id not found';
-}
+// type TagListModel = {
+//   init: Tag[];
+//   data: Tag[];
+//   fetch: () => Tag[];
+//   create: (name: string) => 'success' | 'duplicated' | 'name void';
+//   save: () => void;
+//   update: (id: string, name: string) => 'success' | 'id not found' | 'duplicated';
+//   removeTag: (id: string) => 'success' | 'id not found';
+// }
 

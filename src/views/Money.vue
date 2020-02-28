@@ -43,7 +43,7 @@
     //record所有属性都被监听了，直接就改这些属性
     recordList= store.recordList();
     //recordList是用来记录所有信息的
-    tags = store.tagList;
+    tags = store.tagList();
 
 
     // onUpdateType(value: string) {

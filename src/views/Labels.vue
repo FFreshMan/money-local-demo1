@@ -28,14 +28,19 @@
     components: {Button}
   })
   export default class Labels extends Vue {
-    tags = store.tagList;
+    tags = store.tagList();
     tag?: Tag = {id: ' ', name: ' '};
 
 
     createTag() {
       const name = window.prompt('请输入标签名') as string;
       if(name){
-        store.createTag(name);
+        const message=store.createTag(name);
+        if (message === 'duplicated') {
+          alert('标签名已存在');
+        } else {
+          return
+        }
       }
     }
   }
