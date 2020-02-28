@@ -6,6 +6,7 @@ import store from './store';
 import Layout from '@/components/Layout.vue';
 import Icons from '@/components/Icons.vue';
 import {tagListModel} from '@/models/tagListModel';
+import {recordListModel} from '@/models/recordListModel';
 
 Vue.config.productionTip = false;
 Vue.component('Layout', Layout);
@@ -22,11 +23,22 @@ window.createTag = (name) => {
     alert('标签创建成功');
   }
 };
-window.remove=(id)=>{
+window.remove = (id) => {
   return tagListModel.remove(id);
 };
-window.updateTag=(id: string,name: string)=>{
+window.updateTag = (id: string, name: string) => {
   return tagListModel.update(id, name);
+};
+window.findTag = (id: string) => {
+  const tags = window.tagList;
+  return tags.filter(t => t.id === id)[0];
+};
+window.recordList = recordListModel.fetch();
+window.createRecord=(record: RecordItem)=>{
+  return recordListModel.create(record);
+};
+window.saveRecord=()=>{
+  return recordListModel.save();
 };
 new Vue({
   router: router,

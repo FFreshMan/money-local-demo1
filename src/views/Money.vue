@@ -16,10 +16,8 @@
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import {Component, Watch} from 'vue-property-decorator';
-  import {recordListModel} from '@/models/recordListModel';
 
 
-  const recordList = recordListModel.fetch();
 
   // const version: string = window.localStorage.getItem('version') || '0';
   // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
@@ -42,7 +40,7 @@
   export default class Money extends Vue {
     record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
     //record所有属性都被监听了，直接就改这些属性
-    recordList: RecordItem[] = recordList;
+    recordList= window.recordList;
     //recordList是用来记录所有信息的
     tags = window.tagList;
 
@@ -63,13 +61,13 @@
     }
 
     saveRecord() {
-      recordListModel.create(this.record);
-      recordListModel.save();
+      window.createRecord(this.record);
+      window.saveRecord();
     }
 
     @Watch('recordList')
     onRecordListChange() {
-      recordListModel.save();
+      window.saveRecord();
     }
   }
 

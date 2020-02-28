@@ -35,8 +35,7 @@
 
     created() {
       const id = this.$route.params.id;
-      const tags = window.tagList;
-      const tag = tags.filter(t => t.id === id)[0];
+      const tag = window.findTag(id);
       if (tag) {
         this.tag = tag;
       } else {
@@ -60,7 +59,8 @@
         return;
       }
     }
-    goBack(){
+
+    goBack() {
       this.$router.replace('/labels');
     }
   }
