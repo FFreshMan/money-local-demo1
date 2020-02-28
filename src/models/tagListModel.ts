@@ -1,8 +1,6 @@
 import createId from '@/lib/idCreater';
 
 const localStorageKeyName = 'tagList';
-
-
 const tagListModel: TagListModel = {
   init: [{'id': '衣', 'name': '衣'}, {'id': '食', 'name': '食'}, {'id': '住', 'name': '住'}, {'id': '行', 'name': '行'}],
   data: [],
@@ -49,7 +47,7 @@ const tagListModel: TagListModel = {
       return 'id not found';
     }
   },
-  remove(id: string) {
+  removeTag(id: string) {
     let index = -1;
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].id === id) {

@@ -19,16 +19,6 @@ type TagListModel = {
   create: (name: string) => 'success' | 'duplicated' | 'name void';
   save: () => void;
   update: (id: string, name: string) => 'success' | 'id not found' | 'duplicated';
-  remove: (id: string) => 'success' | 'id not found';
+  removeTag: (id: string) => 'success' | 'id not found';
 }
 
-interface Window {
-  tagList: Tag[];
-  createTag: (name: string) => void;
-  remove: (id: string) => 'success' | 'id not found';
-  updateTag: TagListModel['update'];//表示我的类型和TagListModel的update类型一样
-  findTag: (id: string) => Tag;
-  recordList: RecordItem[];
-  createRecord: (record: RecordItem) => void;
-  saveRecord: () => void;
-}

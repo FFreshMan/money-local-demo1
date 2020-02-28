@@ -15,12 +15,13 @@
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
-  import {Component, Watch} from 'vue-property-decorator';
+  import {Component} from 'vue-property-decorator';
+  import store from '@/store/index2';
 
 
 
-  // const version: string = window.localStorage.getItem('version') || '0';
-  // const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
+  // const version: string = store.localStorage.getItem('version') || '0';
+  // const recordList: Record[] = JSON.parse(store.localStorage.getItem('recordList') || '[]');
   // if (version === '1.0.0') {
   //   //数据迁移
   //   recordList.forEach(record => {
@@ -28,7 +29,7 @@
   //   });
   //   //保存数据
 
-  //   window.localStorage.setItem('recordList', JSON.stringify(recordList));
+  //   store.localStorage.setItem('recordList', JSON.stringify(recordList));
   // }
   window.localStorage.setItem('version', '1.0.1');
 
@@ -40,9 +41,9 @@
   export default class Money extends Vue {
     record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
     //record所有属性都被监听了，直接就改这些属性
-    recordList= window.recordList;
+    recordList= store.recordList();
     //recordList是用来记录所有信息的
-    tags = window.tagList;
+    tags = store.tagList;
 
 
     // onUpdateType(value: string) {
@@ -61,13 +62,7 @@
     }
 
     saveRecord() {
-      window.createRecord(this.record);
-      window.saveRecord();
-    }
-
-    @Watch('recordList')
-    onRecordListChange() {
-      window.saveRecord();
+      store.createRecord(this.record);
     }
   }
 
