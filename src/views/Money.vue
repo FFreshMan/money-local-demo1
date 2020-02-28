@@ -64,15 +64,13 @@
     }
 
     saveRecord() {
-      const record2 = recordListModel.clone(this.record);
-      //这里要讲原对象深拷贝一下然后还原成相同的却不同地址的对象，防止引用同一个地址
-      record2.createdDate = new Date();
-      this.recordList.push(record2);
+      recordListModel.create(this.record);
+      recordListModel.save();
     }
 
     @Watch('recordList')
     onRecordListChange() {
-      recordListModel.save(this.recordList);
+      recordListModel.save();
     }
   }
 
