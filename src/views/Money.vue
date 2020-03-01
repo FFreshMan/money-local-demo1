@@ -34,22 +34,19 @@
   @Component({
       components:
         {Tags, FormItem, Types, NumberPad},
-      computed: {
-        recordList() {
-          return this.$store.state.recordList;
-          //recordList是用来记录所有信息的
-        },
-        tags: {
-          get() {
-            return this.$store.state.tagList;
-          },
-        }
       }
-    }
   )
   export default class Money extends Vue {
     record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
+
     //record所有属性都被监听了，直接就改这些属性
+    get tags() {
+      return this.$store.state.tagList;
+    }
+
+    get recordList() {
+      return this.$store.state.recordList;
+    }
 
     // onUpdateType(value: string) {
     //   this.record.type = value;

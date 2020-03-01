@@ -35,12 +35,13 @@
     get tag() {
       return this.$store.state.currentTag;
     }
+
     created() {
-      this.$store.commit('setCurrentTag');
+      this.$store.commit('fetchTags');
       const id = this.$route.params.id;
       this.$store.commit('setCurrentTag', id);
       if (this.tag) {
-        return
+        return;
       } else {
         this.$router.replace('/404');
       }
@@ -48,7 +49,7 @@
 
     updateTag(name: string) {
       if (this.tag) {
-        this.$store.commit('updateTag', name);
+        this.$store.commit('updateTag', {id: this.tag.id, name: name});
       } else {
         return;
       }

@@ -84,7 +84,7 @@ const store = new Vuex.Store({
           store.commit('saveTags');
         }
       } else {
-        return 'id not found';
+        return
       }
     },
   },
