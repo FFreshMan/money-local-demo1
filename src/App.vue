@@ -21,6 +21,9 @@
   }
 
 </style>
-<script>
-  export default {}
+<script lang="js">
+
+  export default {
+
+  }
 </script>

@@ -16,7 +16,6 @@
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import {Component} from 'vue-property-decorator';
-  import store from '@/store/index2';
 
 
   // const version: string = store.localStorage.getItem('version') || '0';
@@ -37,16 +36,13 @@
         {Tags, FormItem, Types, NumberPad},
       computed: {
         recordList() {
-          return store.recordList;
+          return this.$store.state.recordList;
           //recordList是用来记录所有信息的
         },
         tags: {
-         get(){
-           return store.tagList;
-         },
-         set(){
-           store.saveTags()
-         }
+          get() {
+            return this.$store.state.tagList;
+          },
         }
       }
     }
@@ -54,7 +50,6 @@
   export default class Money extends Vue {
     record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
     //record所有属性都被监听了，直接就改这些属性
-     tags: Tag[]=store.tagList;
 
     // onUpdateType(value: string) {
     //   this.record.type = value;
@@ -62,7 +57,6 @@
     //所以直接就改了record中的type这样就可以省略这个函数
 
     onUpdateNotes(value: string) {
-
       this.record.notes = value;
     }
 
@@ -72,7 +66,7 @@
     }
 
     saveRecord() {
-      store.createRecord(this.record);
+      this.$store.commit('createRecord', this.record);
     }
   }
 

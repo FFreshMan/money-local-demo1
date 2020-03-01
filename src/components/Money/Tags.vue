@@ -18,12 +18,16 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component, Prop} from 'vue-property-decorator';
-  import store from '@/store/index2';
+
 
   @Component
   export default class Tags extends Vue {
-    @Prop(Array)readonly   dataSource: Tag[] | undefined;
+    @Prop(Array) readonly dataSource: Tag[] | undefined;
     selectedTags: Tag[] = [];
+
+    created() {
+      this.$store.commit('fetchTags');
+    }
 
     toggle(tag: Tag) {
       const index = this.selectedTags.indexOf(tag);
@@ -32,17 +36,15 @@
       } else {
         this.selectedTags.push(tag);
       }
-      this.$emit('update:value',this.selectedTags)
+      this.$emit('update:value', this.selectedTags);
     }
 
     newTag() {
       const name = window.prompt('请输入标签名') as string;
-      store.createTag(name);
-      if(name===''){
-        window.alert('标签名不能为空')
-      }else if(this.dataSource){
-        this.$emit('update:dataSource',store.tagList)
-        //这里不能直接修改标签数组，而是触发一个事件然后让外部监听这个事件
+      if (name === '') {
+        window.alert('标签名不能为空');
+      } else {
+        this.$store.commit('createTag', name);
       }
     }
   }
