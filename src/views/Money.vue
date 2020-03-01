@@ -19,7 +19,6 @@
   import store from '@/store/index2';
 
 
-
   // const version: string = store.localStorage.getItem('version') || '0';
   // const recordList: Record[] = JSON.parse(store.localStorage.getItem('recordList') || '[]');
   // if (version === '1.0.0') {
@@ -35,16 +34,27 @@
 
   @Component({
       components:
-        {Tags, FormItem, Types, NumberPad}
+        {Tags, FormItem, Types, NumberPad},
+      computed: {
+        recordList() {
+          return store.recordList;
+          //recordList是用来记录所有信息的
+        },
+        tags: {
+         get(){
+           return store.tagList;
+         },
+         set(){
+           store.saveTags()
+         }
+        }
+      }
     }
   )
   export default class Money extends Vue {
     record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
     //record所有属性都被监听了，直接就改这些属性
-    recordList= store.recordList();
-    //recordList是用来记录所有信息的
-    tags = store.tagList();
-
+     tags: Tag[]=store.tagList;
 
     // onUpdateType(value: string) {
     //   this.record.type = value;
@@ -60,6 +70,7 @@
       this.record.tags = value;
       //这里的value是传入的tags数组，上面的：value是触发的事件监听
     }
+
     saveRecord() {
       store.createRecord(this.record);
     }

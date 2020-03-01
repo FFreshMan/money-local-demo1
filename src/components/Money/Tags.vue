@@ -41,7 +41,7 @@
       if(name===''){
         window.alert('标签名不能为空')
       }else if(this.dataSource){
-        this.$emit('update:dataSource',store.tagList())
+        this.$emit('update:dataSource',store.tagList)
         //这里不能直接修改标签数组，而是触发一个事件然后让外部监听这个事件
       }
     }

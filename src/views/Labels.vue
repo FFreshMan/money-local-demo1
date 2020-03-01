@@ -28,7 +28,7 @@
     components: {Button}
   })
   export default class Labels extends Vue {
-    tags = store.tagList();
+    tags = store.tagList;
     tag?: Tag = {id: ' ', name: ' '};
 
 
