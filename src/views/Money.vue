@@ -3,7 +3,7 @@
     <Layout class-prefix="layout">
       {{record}}
       <number-pad :value.sync="record.amount" @submit="saveRecord"/>
-      <Types :value.sync="record.type"/>
+      <Tabs :value.sync="record.type" :data-source.sync="arrType"/>
       <FormItem file-name="备注" place-holder="请在这里输入备注" @update:value="onUpdateNotes"/>
       <Tags :data-source.sync="tags" :value.sync="record.tags"/>
     </Layout>
@@ -11,11 +11,12 @@
 </template>
 <script lang="ts">
   import Vue from 'vue';
-  import Types from '@/components/Money/Types.vue';
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Tags from '@/components/Money/Tags.vue';
   import FormItem from '@/components/Money/FormItem.vue';
   import {Component} from 'vue-property-decorator';
+  import Tabs from '@/components/Tabs.vue';
+  import arrType from '@/constants/arrType';
 
 
   // const version: string = store.localStorage.getItem('version') || '0';
@@ -33,8 +34,8 @@
 
   @Component({
       components:
-        {Tags, FormItem, Types, NumberPad},
-      }
+        {Tabs, Tags, FormItem, NumberPad},
+    }
   )
   export default class Money extends Vue {
     record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
@@ -47,6 +48,8 @@
     get recordList() {
       return this.$store.state.recordList;
     }
+
+    arrType = arrType;
 
     // onUpdateType(value: string) {
     //   this.record.type = value;
