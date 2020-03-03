@@ -10,11 +10,6 @@ const init: Tag[] = [{'id': '0', 'name': '衣'}, {'id': '1', 'name': '食'}, {'i
   'id': '3',
   'name': '行'
 }];
-type RootState = {
-  recordList: RecordItem[];
-  tagList: Tag[];
-  currentTag?: Tag;
-}
 const store = new Vuex.Store({
   state: {
     recordList: [] as RecordItem[],
@@ -29,9 +24,9 @@ const store = new Vuex.Store({
       state.recordList = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]') as RecordItem[];
     },
     createRecord(state, record: RecordItem) {
-      const record2 = clone(record);
+      const record2: RecordItem = clone(record);
       //这里要讲原对象深拷贝一下然后还原成相同的却不同地址的对象，防止引用同一个地址
-      record2.createdDate = new Date();
+      record2.createdAt = new Date().toISOString();
       state.recordList && state.recordList.push(record2);
       store.commit('saveRecords');
     },

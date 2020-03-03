@@ -4,13 +4,18 @@ type RecordItem = {
   notes: string;
   type: string;
   amount: number;
-  createdDate?: Date;
+  createdAt?: string;
   //除了数据类型还可以写类/构造函数
 }
 //?表示可有可无
 type Tag = {
   id: string;
   name: string;
+}
+type RootState = {
+  recordList: RecordItem[];
+  tagList: Tag[];
+  currentTag?: Tag;
 }
 // type TagListModel = {
 //   init: Tag[];
