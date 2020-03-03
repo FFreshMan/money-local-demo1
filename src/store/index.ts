@@ -5,6 +5,7 @@ import createId from '@/lib/idCreater';
 
 Vue.use(Vuex);//Vue.prototype.$store=store
 const localStorageKeyName = 'recordList';
+const localStorageKeyTag = 'tagList';
 const init: Tag[] = [{'id': '0', 'name': '衣'}, {'id': '1', 'name': '食'}, {'id': '2', 'name': '住'}, {
   'id': '3',
   'name': '行'
@@ -21,8 +22,8 @@ const store = new Vuex.Store({
     currentTag: undefined
   } as RootState,
   mutations: {
-    setCurrentTag(state,id){
-      state.currentTag = state.tagList.filter(t => t.id === id)[0]
+    setCurrentTag(state, id) {
+      state.currentTag = state.tagList.filter(t => t.id === id)[0];
     },
     fetchRecords(state) {
       state.recordList = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]') as RecordItem[];
@@ -39,15 +40,15 @@ const store = new Vuex.Store({
     },
     fetchTags(state) {
       const myTags: string = JSON.stringify(init);
-      state.tagList = JSON.parse(window.localStorage.getItem(localStorageKeyName) || myTags);
+      state.tagList = JSON.parse(window.localStorage.getItem(localStorageKeyTag) || myTags);
     },
     saveTags(state) {
-      window.localStorage.setItem(localStorageKeyName, JSON.stringify(state.tagList));
+      window.localStorage.setItem(localStorageKeyTag, JSON.stringify(state.tagList));
     },
     createTag(state, name: string) {
       const nameList = state.tagList.map(t => t.name);
       if (nameList.indexOf(name) >= 0) {
-        window.alert('标签名重复')
+        window.alert('标签名重复');
       } else {
         const id: string = createId().toString();
         const tag = {id: id, name: name};
@@ -64,19 +65,19 @@ const store = new Vuex.Store({
         }
       }
       if (index === -1) {
-        window.alert('标签不存在')
+        window.alert('标签不存在');
       } else {
         state.tagList.splice(index, 1);
         store.commit('saveTags');
       }
     },
-    updateTag(state, payload: {id: string;name: string}) {
-      const {id,name}=payload;
+    updateTag(state, payload: { id: string; name: string }) {
+      const {id, name} = payload;
       const idList = state.tagList.map(t => t.id);
       if (idList.indexOf(id) >= 0) {
         const names = state.tagList.map(t => t.name);
         if (names.indexOf(name) >= 0) {
-          window.alert('标签已存在')
+          window.alert('标签已存在');
         } else {
           const tag = state.tagList.filter(t => t.id === id)[0];
           tag.id = id;
@@ -84,7 +85,7 @@ const store = new Vuex.Store({
           store.commit('saveTags');
         }
       } else {
-        return
+        return;
       }
     },
   },

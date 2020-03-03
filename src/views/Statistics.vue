@@ -3,6 +3,9 @@
     <Layout>
       <Tabs :data-source="arrType" :value.sync="type" :class-prefix="'type'"/>
       <Tabs :data-source="arrInterval" :value.sync="range" :class-prefix="'interval'"/>
+      <div>
+        {{recordList }}
+      </div>
     </Layout>
   </div>
 </template>
@@ -20,6 +23,12 @@
     }
   })
   export default class Statistics extends Vue {
+    get recordList(){
+    return this.$store.state.recordList
+    }
+    get result(){
+      return this.recordList
+    }
     range = 'day';
     type = '-';
     arrInterval = arrInterval;
@@ -28,9 +37,14 @@
 </script>
 
 <style lang="scss" scoped>
-  ::v-deep .type-tabs-item, ::v-deep .interval-tabs-item {
-    &.selected {
-      background: #c4c4c4;
+  ::v-deep {
+    .type-tabs-item {
+      &.selected {
+        background: #c4c4c4;
+      }
+    }
+    .interval-tabs-item{
+      height: 50px;
     }
   }
 </style>
