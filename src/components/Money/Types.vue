@@ -2,8 +2,8 @@
   <div>
     <div>
       <ul class="types">
-        <li :class="value==='-'&&'selected'" @click="selectType('-')">支出</li>
-        <li :class="value==='+'&&'selected'" @click="selectType('+')">收入</li>
+        <li :class="{[classPrefix+'-item']:classPrefix, selected:value==='-'}" @click="selectType('-')">支出</li>
+        <li :class="{[classPrefix+'-item']:classPrefix, selected:value==='+'}" @click="selectType('+')">收入</li>
       </ul>
     </div>
   </div>
@@ -17,6 +17,8 @@
   export default class Type extends Vue {
     // @Prop(Number) readonly propA: number | undefined;
     @Prop({default: '-'}) readonly value!: string;
+    @Prop() classPrefix?: string;
+    //这里用一个对象来驱动class，条件存在则添加此class
 
     selectType(type: string) {
       if (type !== '-' && type !== '+') {
@@ -50,7 +52,7 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 200px;
+        width: 100%;
         height: 4px;
         background: #333;
         /*这里用伪元素是因为border改变会让页面变动*/
