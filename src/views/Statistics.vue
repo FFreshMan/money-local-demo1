@@ -4,8 +4,10 @@
       <Tabs :data-source="arrType" :value.sync="type" :class-prefix="'type'"/>
       <div>
         <ol>
-          <li v-for="(group,key) in result" :key="key">
-            <h3 class="title">{{beautify(group.title)}}</h3>
+          <li v-for="(group,key) in groupList" :key="key">
+            <h3 class="title">{{beautify(group.title)}}
+              <span>{{group.total}}</span>
+            </h3>
             <ol>
               <li v-for="item in group.items" :key="item.id" class="record">
                 <span> {{tagString(item.tags)}}</span>
@@ -41,22 +43,25 @@
       return (this.$store.state as RootState).recordList;
     }
 
-    get result() {
+    get groupList() {
       const {recordList} = this;
+      type Result = [{ title: string|undefined; items: RecordItem[]; total?: number|undefined }];
       if (recordList.length === 0) {return [];}
-      const newList = clone(recordList.sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()));
-      const groupList = [{title: newList[0].createdAt, items: [newList[0]]}];
+      const newList = clone(recordList.filter(item=>item.type===this.type).sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()));
+      const result: Result = [{title: newList[0].createdAt, items: [newList[0]],total: 0}];
       for (let i = 1; i < newList.length; i++) {
         const current = newList[i];
-        const last = groupList[groupList.length - 1];
+        const last = result[result.length - 1];
         if (dayjs(current.createdAt).isSame(dayjs(last.title), 'day')) {
           last.items.push(current);
         } else {
-          groupList.push({title: current.createdAt, items: [current]});
+          result.push({title: current.createdAt, items: [current]});
         }
       }
-      console.log(groupList);
-      return groupList;
+      result.map(group => {
+        group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+      });
+      return result;
 
     }
 
@@ -96,6 +101,7 @@
     .type-tabs-item {
       &.selected {
         background: white;
+
         &::after {
           display: none;
         }

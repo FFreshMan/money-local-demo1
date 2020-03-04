@@ -45,7 +45,8 @@
     }
 
     ok() {
-      this.$emit('update:value', this.output);
+
+      this.$emit('update:value', parseFloat(this.output));
       //这里value有两个作用一个是传入一个只读数据
       //一个是监听value的变化，并将this.output和外部的amount绑定到一起
       //所以外部的onAmountChanged函数就可以省略了
