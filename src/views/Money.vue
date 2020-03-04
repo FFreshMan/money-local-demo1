@@ -66,7 +66,11 @@
     }
 
     saveRecord() {
-      this.$store.commit('createRecord', this.record);
+      if (this.record.tags!.length>0) {
+        this.$store.commit('createRecord', this.record);
+      } else {
+        window.alert('请选择一个标签');
+      }
     }
   }
 

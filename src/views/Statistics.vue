@@ -6,10 +6,13 @@
       <div>
         <ol>
           <li v-for="(group,index) in result" :key="index">
-          <h3>{{group.title}}</h3>
+            <h3 class="title">{{group.title}}</h3>
+
             <ol>
-              <li v-for="item in group.items" :key="item.id">
-                {{item.amount}}
+              <li v-for="item in group.items" :key="item.id" class="record">
+                <span> {{tagString(item.tags)}}</span>
+                <span class="notes">{{item.notes}}</span>
+                <span>￥{{item.amount}}</span>
               </li>
             </ol>
           </li>
@@ -25,7 +28,6 @@
   import Tabs from '@/components/Tabs.vue';
   import arrType from '@/constants/arrType';
   import arrInterval from '@/constants/arrInterval';
-
 
 
   @Component({
@@ -51,10 +53,14 @@
       return hashTable;
     }
 
-    // beforeCreated() {
-    //   this.$store.commit('fetchRecords');
-    //   console.log(this.recordList);
-    // }
+    tagString(tags: Tag[]) {
+      const arrName = [];
+      for (let i = 0; i < tags.length; i++) {
+        arrName.push(tags[i].name);
+      }
+      return arrName.length===0? '无':arrName.toString()
+    }
+
     created() {
       this.$store.commit('fetchRecords');
     }
@@ -76,6 +82,28 @@
 
     .interval-tabs-item {
       height: 50px;
+    }
+
+    %item {
+      padding: 8px 16px;
+      line-height: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title {
+      @extend %item;
+    }
+
+    .record {
+      @extend %item;
+      background: white;
+      > .notes{
+        margin-right: auto;
+        margin-left: 16px;
+        color: #999;
+      }
     }
   }
 </style>
