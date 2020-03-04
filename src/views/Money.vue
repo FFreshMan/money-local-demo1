@@ -81,6 +81,7 @@
     flex-direction: column-reverse;
     /*flex逆向布局可以调整空白部分位置，元素同样倒置*/
   }
+
 </style>
 <style lang="scss" scoped>
 

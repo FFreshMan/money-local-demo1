@@ -2,7 +2,6 @@
   <div class="x">
     <Layout>
       <Tabs :data-source="arrType" :value.sync="type" :class-prefix="'type'"/>
-      <Tabs :data-source="arrInterval" :value.sync="range" :class-prefix="'interval'"/>
       <div>
         <ol>
           <li v-for="(group,key) in result" :key="key">
@@ -26,7 +25,6 @@
   import {Component} from 'vue-property-decorator';
   import Tabs from '@/components/Tabs.vue';
   import arrType from '@/constants/arrType';
-  import arrInterval from '@/constants/arrInterval';
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
 
@@ -36,9 +34,7 @@
     }
   })
   export default class Statistics extends Vue {
-    range = 'day';
     type = '-';
-    arrInterval = arrInterval;
     arrType = arrType;
 
     get recordList() {
@@ -99,7 +95,10 @@
   ::v-deep {
     .type-tabs-item {
       &.selected {
-        background: #c4c4c4;
+        background: white;
+        &::after {
+          display: none;
+        }
       }
     }
 
