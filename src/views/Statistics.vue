@@ -5,9 +5,8 @@
       <Tabs :data-source="arrInterval" :value.sync="range" :class-prefix="'interval'"/>
       <div>
         <ol>
-          <li v-for="(group,index) in result" :key="index">
-            <h3 class="title">{{group.title}}</h3>
-
+          <li v-for="(group,key) in result" :key="key">
+            <h3 class="title">{{beautify(group.title)}}</h3>
             <ol>
               <li v-for="item in group.items" :key="item.id" class="record">
                 <span> {{tagString(item.tags)}}</span>
@@ -28,7 +27,7 @@
   import Tabs from '@/components/Tabs.vue';
   import arrType from '@/constants/arrType';
   import arrInterval from '@/constants/arrInterval';
-
+  import dayjs from 'dayjs';
 
   @Component({
     components: {
@@ -36,6 +35,11 @@
     }
   })
   export default class Statistics extends Vue {
+    range = 'day';
+    type = '-';
+    arrInterval = arrInterval;
+    arrType = arrType;
+
     get recordList() {
       return (this.$store.state as RootState).recordList;
     }
@@ -53,22 +57,34 @@
       return hashTable;
     }
 
+    beautify(title: string) {
+      const day = dayjs(title);
+      const now = dayjs();
+      if(day.isSame(now,'day')){
+        return '今天'
+      }else if (day.isSame(now.subtract(1, 'day'), 'day')){
+        return '昨天'
+      }else if(day.isSame(now.subtract(2, 'day'), 'day')){
+        return '前天'
+      }else if(day.isSame(now,'year')){
+        return day.format('M月D日')
+      }else{
+        return day.format('YYYY年M月D日')
+      }
+        }
+
     tagString(tags: Tag[]) {
       const arrName = [];
       for (let i = 0; i < tags.length; i++) {
         arrName.push(tags[i].name);
       }
-      return arrName.length===0? '无':arrName.toString()
+      return arrName.length === 0 ? '无' : arrName.toString();
     }
 
     created() {
       this.$store.commit('fetchRecords');
     }
 
-    range = 'day';
-    type = '-';
-    arrInterval = arrInterval;
-    arrType = arrType;
   }
 </script>
 
@@ -99,7 +115,8 @@
     .record {
       @extend %item;
       background: white;
-      > .notes{
+
+      > .notes {
         margin-right: auto;
         margin-left: 16px;
         color: #999;
