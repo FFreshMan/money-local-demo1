@@ -2,32 +2,23 @@
 //可以排除eslint的检查，或者可以用.eslintignore
 const path = require('path')
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/money-local-demo1/'
+    : '/',
   lintOnSave: false,
-  chainWebpack: config =>{
+  chainWebpack: config => {
     const dir = path.resolve(__dirname, 'src/assets/icons')
 
     config.module
       .rule('svg-sprite')
       .test(/\.svg$/)
       .include.add(dir).end() // 包含 icons 目录
-      .use('svg-sprite-loader-mod').loader('svg-sprite-loader-mod').options({extract:false}).end()
+      .use('svg-sprite-loader-mod').loader('svg-sprite-loader-mod').options({extract: false}).end()
       .use('svgo-loader').loader('svgo-loader')
       .tap(options => ({...options, plugins: [{removeAttrs: {attrs: 'fill'}}]})).end()
     config.plugin('svg-sprite').use(require('svg-sprite-loader-mod/plugin'), [{plainSprite: true}])
     config.module.rule('svg').exclude.add(dir) // 其他 svg loader 排除 icons 目录
-      //13-15这里是将fill删除，优化svg
+    //13-15这里是将fill删除，优化svg
 
-
-
-  // config.module
-  //   .rule('svg-sprite')
-  //   .test(/\.(svg)(\?.*)?$/)
-  //   .include.add(dir).end()只对此路径下的svg做loader
-  //   .use('svg-sprite-loader-mod').loader('svg-sprite-loader-mod').options({extract: false}).end()
-  //   .use('svgo-loader').loader('svgo-loader')
-  //   .tap(options => ({...options, plugins: [{removeAttrs: {attrs: 'fill'}}]}))
-  //   .end()
-  // config.plugin('svg-sprite').use(require('svg-sprite-loader-mod/plugin'), [{plainSprite: true}])
-  // config.module.rule('svg').exclude.add(dir)
-}
+  }
 }

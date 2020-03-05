@@ -55,10 +55,6 @@
     // }由于上面<Types :value="record.type" @update:value="onUpdateType"/>被改写成sync
     //所以直接就改了record中的type这样就可以省略这个函数
 
-    onUpdateNotes(value: string) {
-      this.record.notes = value;
-    }
-
     onUpdateTags(value: Tag[]) {
       this.record.tags = value;
       //这里的value是传入的tags数组，上面的：value是触发的事件监听
