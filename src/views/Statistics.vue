@@ -3,7 +3,7 @@
     <Layout>
       <Tabs :data-source="arrType" :value.sync="type" :class-prefix="'type'"/>
       <div>
-        <ol>
+        <ol v-if="groupList.length>0">
           <li v-for="(group,key) in groupList" :key="key">
             <h3 class="title">{{beautify(group.title)}}
               <span>{{group.total}}</span>
@@ -17,6 +17,9 @@
             </ol>
           </li>
         </ol>
+        <div v-else class="emptyRecord">
+ 目前无相关记录
+        </div>
       </div>
     </Layout>
   </div>
@@ -46,8 +49,8 @@
     get groupList() {
       const {recordList} = this;
       type Result = [{ title: string|undefined; items: RecordItem[]; total?: number|undefined }];
-      if (recordList.length === 0) {return [];}
       const newList = clone(recordList.filter(item=>item.type===this.type).sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()));
+      if (newList.length === 0) {return [];}
       const result: Result = [{title: newList[0].createdAt, items: [newList[0]],total: 0}];
       for (let i = 1; i < newList.length; i++) {
         const current = newList[i];
@@ -86,7 +89,7 @@
       for (let i = 0; i < tags.length; i++) {
         arrName.push(tags[i].name);
       }
-      return arrName.length === 0 ? '无' : arrName.toString();
+      return arrName.length === 0 ? '无' : arrName.join('，');
     }
 
     created() {
@@ -133,6 +136,11 @@
         margin-left: 16px;
         color: #999;
       }
+    }
+    .emptyRecord{
+      margin-top: 45vh;
+      text-align: center;
+      color: #c3c3c3;
     }
   }
 </style>

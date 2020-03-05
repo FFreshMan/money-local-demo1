@@ -2,14 +2,11 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import clone from '@/lib/clone';
 import createId from '@/lib/idCreater';
+import initTags from '@/constants/InitTags';
 
 Vue.use(Vuex);//Vue.prototype.$store=store
 const localStorageKeyName = 'recordList';
 const localStorageKeyTag = 'tagList';
-const init: Tag[] = [{'id': '0', 'name': '衣'}, {'id': '1', 'name': '食'}, {'id': '2', 'name': '住'}, {
-  'id': '3',
-  'name': '行'
-}];
 const store = new Vuex.Store({
   state: {
     recordList: [] as RecordItem[],
@@ -29,12 +26,13 @@ const store = new Vuex.Store({
       record2.createdAt = new Date().toISOString();
       state.recordList && state.recordList.push(record2);
       store.commit('saveRecords');
+      window.alert('已保存')
     },
     saveRecords(state) {
       window.localStorage.setItem(localStorageKeyName, JSON.stringify(state.recordList));
     },
     fetchTags(state) {
-      const myTags: string = JSON.stringify(init);
+      const myTags: string = JSON.stringify(initTags);
       state.tagList = JSON.parse(window.localStorage.getItem(localStorageKeyTag) || myTags);
     },
     saveTags(state) {

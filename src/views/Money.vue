@@ -3,7 +3,7 @@
     <Layout class-prefix="layout">
       <number-pad :value.sync="record.amount" @submit="saveRecord"/>
       <Tabs :value.sync="record.type" :data-source.sync="arrType"/>
-      <FormItem file-name="备注" place-holder="请在这里输入备注" @update:value="onUpdateNotes"/>
+      <FormItem file-name="备注" place-holder="请在这里输入备注" :value.sync="record.notes"/>
       <Tags :data-source.sync="tags" :value.sync="record.tags"/>
     </Layout>
   </div>
@@ -65,11 +65,12 @@
     }
 
     saveRecord() {
-      if (this.record.tags!.length>0) {
+      if (this.record.tags!.length > 0) {
         this.$store.commit('createRecord', this.record);
       } else {
         window.alert('请选择一个标签');
       }
+      this.record.notes=''
     }
   }
 
